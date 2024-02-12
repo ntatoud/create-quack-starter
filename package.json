@@ -1,7 +1,7 @@
 {
   "name": "create-quack-starter",
   "description": "Scaffold a new Quack-starter project",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -26,7 +26,8 @@
   "homepage": "https://github.com/ntatoud/create-quack-starter#readme",
   "files": [
     "index.js",
-    "app"
+    "app",
+    "assets/quack-starter-logo.png"
   ],
   "scripts": {
     "prepare": "husky install",
