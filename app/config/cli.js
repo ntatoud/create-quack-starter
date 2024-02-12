@@ -24,7 +24,7 @@ const bold = chalk.bold;
 
 const helpText = `
     ${bold('Usage')}
-        $ create-start-ui <target> <projectPath>
+        $ create-quack-starter <projectPath>
 
     ${bold('Options')}
         -h, --help                        Show this help

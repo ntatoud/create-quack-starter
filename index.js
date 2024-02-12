@@ -14,11 +14,9 @@ const { debug, help } = flags;
   await init();
   help && cli.showHelp(0);
   debug && log(flags);
-
-  console.log(input);
   // Get the project name (should be the first argument)
   const [projectName] = input;
-  console.log(projectName);
+
   if (!projectName) {
     cli.showHelp(0);
   }
