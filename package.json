@@ -8,7 +8,6 @@
     "create-quack-starter": "index.js"
   },
   "publishConfig": {
-    "registry": "https://github.com/ntatoud/create-quack-starter",
     "access": "public"
   },
   "exports": "./index.js",
