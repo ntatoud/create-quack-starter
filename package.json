@@ -1,7 +1,7 @@
 {
   "name": "create-quack-starter",
   "description": "Scaffold a new Quack-starter project",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "type": "module",
   "bin": {

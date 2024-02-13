@@ -12,7 +12,7 @@ export default async () => {
   console.log();
   console.log(
     await terminalImage.file(fileURLToPath(logoUrl.toString()), {
-      height: 10,
+      height: '60%',
     })
   );
   console.log();
