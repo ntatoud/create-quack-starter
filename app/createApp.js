@@ -4,7 +4,6 @@ import fs from 'fs-extra';
 import path from 'path';
 import { temporaryDirectoryTask } from 'tempy';
 
-import cli from './config/cli.js';
 import { spinner } from './config/constants.js';
 import {
   checkEnv,
@@ -13,9 +12,7 @@ import {
   extractTemplateFolder,
 } from './functions.js';
 
-const { packageInstall } = cli.flags;
-
-export const createApp = async ({ projectName, outDirPath }) => {
+export const createApp = async ({ projectName, outDirPath, options }) => {
   await checkEnv({ outDirPath });
 
   //Download zip
@@ -42,6 +39,24 @@ export const createApp = async ({ projectName, outDirPath }) => {
 
   spinner.succeed();
 
+  if (options.gitInit) {
+    spinner.start('Initializing repository...');
+
+    try {
+      await execa('git', ['init']);
+      await execa('git', ['add', '.']);
+      await execa('git', [
+        'commit',
+        '-m',
+        'feat: init repository from create-quack-starter',
+      ]);
+    } catch {
+      spinner.fail();
+    }
+
+    spinner.succeed();
+  }
+
   // Block to copy the .env.example to .env
   try {
     // throw an exception if the file does not exist
@@ -52,7 +67,7 @@ export const createApp = async ({ projectName, outDirPath }) => {
     // No catch, we just want to make sure the file exist.
   }
 
-  if (packageInstall) {
+  if (options.packageInstall) {
     let packageManager = 'yarn';
     const pnpmLockFile = path.resolve(outDirPath, 'pnpm-lock.yaml');
     if (await fs.exists(pnpmLockFile)) {
