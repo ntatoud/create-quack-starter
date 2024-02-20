@@ -4,7 +4,7 @@ import path from 'path';
 import prompts from 'prompts';
 
 import { createApp } from './app/createApp.js';
-import { getPackageInfo } from './app/get-package.js';
+import { getPackageVersion } from './app/get-version.js';
 import init from './app/init.js';
 
 process.on('SIGINT', () => process.exit(0));
@@ -12,15 +12,10 @@ process.on('SIGTERM', () => process.exit(0));
 
 (async () => {
   await init();
-  const packageInfo = getPackageInfo();
   const program = new Command()
     .name('create-quack-starter')
     .description('quickly scaffold a react project')
-    .version(
-      packageInfo.version || '1.0.0',
-      '-v, --version',
-      'display the version number'
-    )
+    .version(getPackageVersion(), '-v, --version', 'display the version number')
     .argument('[dir]', 'name of the directory to install quack.')
     .option('--package-install', 'ensures packages installation')
     .option(

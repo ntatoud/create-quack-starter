@@ -39,6 +39,22 @@ export const createApp = async ({ projectName, outDirPath, options }) => {
 
   spinner.succeed();
 
+  if (options.packageInstall) {
+    let packageManager = 'yarn';
+    const pnpmLockFile = path.resolve(outDirPath, 'pnpm-lock.yaml');
+    if (await fs.exists(pnpmLockFile)) {
+      packageManager = 'pnpm';
+    }
+
+    spinner.start(`Installing dependencies using ${packageManager}...`);
+    await execa(packageManager, ['install']);
+    spinner.succeed();
+
+    spinner.succeed(
+      `${chalk.green('Project created and dependencies installed! ')}`
+    );
+  }
+
   if (options.gitInit) {
     spinner.start('Initializing repository...');
 
@@ -65,22 +81,6 @@ export const createApp = async ({ projectName, outDirPath, options }) => {
     await fs.copyFile(envExampleFile, path.relative(outDirPath, '.env'));
   } catch {
     // No catch, we just want to make sure the file exist.
-  }
-
-  if (options.packageInstall) {
-    let packageManager = 'yarn';
-    const pnpmLockFile = path.resolve(outDirPath, 'pnpm-lock.yaml');
-    if (await fs.exists(pnpmLockFile)) {
-      packageManager = 'pnpm';
-    }
-
-    spinner.start(`Installing dependencies using ${packageManager}...`);
-    await execa(packageManager, ['install']);
-    spinner.succeed();
-
-    spinner.succeed(
-      `${chalk.green('Project created and dependencies installed! ')}`
-    );
   }
 
   console.log(`Created ${projectName} at ${outDirPath}`);
